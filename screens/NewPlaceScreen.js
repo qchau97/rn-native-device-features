@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { Colors } from '../constants/Colors';
+import { addPlace } from '../store/actions/places';
 
-const NewPlaceScreen = () => {
+const NewPlaceScreen = ({navigation}) => {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState('');
 
   const handleTitleChange = (newTitle) => {
     setTitle(newTitle);
   };
 
-  const handlePlaceSaved = () => { };
+  const handlePlaceSaved = () => {
+    dispatch(addPlace(title));
+    navigation.goBack();
+  };
 
   return (
     <ScrollView>

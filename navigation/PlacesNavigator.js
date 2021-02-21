@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import { Colors } from '../constants/Colors';
 import MapScreen from '../screens/MapScreen';
 import NewPlaceScreen from '../screens/NewPlaceScreen';
-import PlaceDetailScreen from '../screens/PlaceDetailScreen';
+import PlaceDetailScreen, { screenOptions as placeDetailScreenOptions } from '../screens/PlaceDetailScreen';
 import PlacesListScreen, { screenOptions as placesListScreenOptions } from '../screens/PlacesListScreen';
 
 
@@ -28,6 +28,7 @@ export const PlacesNavigator = () => {
       <PlacesStackNavigator.Screen
         name='PlaceDetail'
         component={PlaceDetailScreen}
+        options={placeDetailScreenOptions}
       />
       <PlacesStackNavigator.Screen
         name='NewPlace'
