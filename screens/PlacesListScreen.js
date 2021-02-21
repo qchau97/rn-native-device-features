@@ -20,7 +20,7 @@ export const screenOptions = navigationData => {
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
           title='Add Place'
-          iconName={Platform.OS === 'android' ? 'plus-outline' : 'plus'}
+          iconName={Platform.OS === 'android' ? 'add-outline' : 'add'}
           onPress={() => {
             navigationData.navigation.navigate('NewPlace');
           }}
