@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
+// import ImageSelector from '../components/ImageSelector';
 import { Colors } from '../constants/Colors';
 import { addPlace } from '../store/actions/places';
 
-const NewPlaceScreen = ({navigation}) => {
+const NewPlaceScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
 
@@ -21,7 +22,12 @@ const NewPlaceScreen = ({navigation}) => {
     <ScrollView>
       <View style={styles.form}>
         <Text style={styles.label}>Title</Text>
-        <TextInput style={styles.textInput} value={title} onChangeText={handleTitleChange} />
+        <TextInput
+          style={styles.textInput}
+          value={title}
+          onChangeText={handleTitleChange}
+        />
+        {/* <ImageSelector /> */}
         <Button title='Save Place' color={Colors.primary} onPress={handlePlaceSaved} />
       </View>
     </ScrollView>
