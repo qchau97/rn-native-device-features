@@ -6,12 +6,12 @@ import CustomHeaderButton from '../components/CustomHeaderButton';
 import PlaceItem from '../components/PlaceItem';
 
 const PlacesListScreen = ({ navigation }) => {
-  const places = useSelector(state => state.places.places)
+  const places = useSelector(state => state.places.places);
 
   const renderPlaceItem = (itemData) => {
     return (
       <PlaceItem
-        image={null}
+        image={itemData.item.imagePath}
         title={itemData.item.title}
         address=''
         onSelect={() => navigation.navigate('PlaceDetail',

@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-// import ImageSelector from '../components/ImageSelector';
+import ImageSelector from '../components/ImageSelector';
 import { Colors } from '../constants/Colors';
 import { addPlace } from '../store/actions/places';
 
 const NewPlaceScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleTitleChange = (newTitle) => {
     setTitle(newTitle);
   };
 
   const handlePlaceSaved = () => {
-    dispatch(addPlace(title));
+    dispatch(addPlace(title, selectedImage));
     navigation.goBack();
+  };
+
+  const handleImageTaken = (imagePath) => {
+    setSelectedImage(imagePath);
   };
 
   return (
@@ -27,7 +32,7 @@ const NewPlaceScreen = ({ navigation }) => {
           value={title}
           onChangeText={handleTitleChange}
         />
-        {/* <ImageSelector /> */}
+        <ImageSelector onImageTaken={handleImageTaken} />
         <Button title='Save Place' color={Colors.primary} onPress={handlePlaceSaved} />
       </View>
     </ScrollView>
