@@ -1,11 +1,13 @@
-import React from 'react';
-import { FlatList, Platform, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { FlatList, Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import PlaceItem from '../components/PlaceItem';
+import { getPlaces } from '../store/actions/places';
 
 const PlacesListScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const places = useSelector(state => state.places.places);
 
   const renderPlaceItem = (itemData) => {
@@ -23,6 +25,18 @@ const PlacesListScreen = ({ navigation }) => {
     )
   };
 
+  const loadPlaces = useCallback(async () => {
+    try {
+      await dispatch(getPlaces());
+    } catch (error) {
+      console.log('loadPlaces() error: ', error.message);
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    loadPlaces();
+  }, [loadPlaces])
+
   return (
     <FlatList
       keyExtractor={item => item.id}
@@ -31,8 +45,6 @@ const PlacesListScreen = ({ navigation }) => {
     />
   );
 };
-
-const styles = StyleSheet.create({});
 
 export const screenOptions = navigationData => {
   return {

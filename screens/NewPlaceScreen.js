@@ -14,8 +14,12 @@ const NewPlaceScreen = ({ navigation }) => {
     setTitle(newTitle);
   };
 
-  const handlePlaceSaved = () => {
-    dispatch(addPlace(title, selectedImage));
+  const handlePlaceSaved = async () => {
+    try {
+      await dispatch(addPlace(title, selectedImage));
+    } catch (error) {
+      console.log('handlePlaceSaved() error: ',error.message);
+    }
     navigation.goBack();
   };
 
