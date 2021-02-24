@@ -2,6 +2,8 @@ package com.fitgoalapp;
 
 import com.facebook.react.ReactActivity;
 
+// import com.rnfs.RNFSPackage;
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -12,4 +14,12 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "FitGoalApp";
   }
+
+  // @Override
+  //   protected List<ReactPackage> getPackages() {
+  //     return Arrays.<ReactPackage>asList(
+  //       new MainReactPackage(), // <---- add comma
+  //       new RNFSPackage() // <---------- add package
+  //     );
+  //   }
 }

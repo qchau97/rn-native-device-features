@@ -183,6 +183,9 @@ android {
 }
 
 dependencies {
+    // ADD THIS (line 187)
+    // implementation project(':react-native-fs')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
