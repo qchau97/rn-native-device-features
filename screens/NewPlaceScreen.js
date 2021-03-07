@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import ImageSelector from '../components/ImageSelector';
+import LocationSelector from '../components/LocationSelector';
 import { Colors } from '../constants/Colors';
 import { addPlace } from '../store/actions/places';
 
@@ -37,6 +38,7 @@ const NewPlaceScreen = ({ navigation }) => {
           onChangeText={handleTitleChange}
         />
         <ImageSelector onImageTaken={handleImageTaken} />
+        <LocationSelector />
         <Button title='Save Place' color={Colors.primary} onPress={handlePlaceSaved} />
       </View>
     </ScrollView>

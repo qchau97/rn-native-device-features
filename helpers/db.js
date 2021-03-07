@@ -63,4 +63,4 @@ export const fetchPlaces = async () => {
     });
   });
   return promise;
-}
+};

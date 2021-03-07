@@ -7,8 +7,6 @@ import NewPlaceScreen from '../screens/NewPlaceScreen';
 import PlaceDetailScreen, { screenOptions as placeDetailScreenOptions } from '../screens/PlaceDetailScreen';
 import PlacesListScreen, { screenOptions as placesListScreenOptions } from '../screens/PlacesListScreen';
 
-
-
 const defaultNavOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === 'android' ? Colors.primary : '',
