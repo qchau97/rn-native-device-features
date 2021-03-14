@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, Button, Alert, PermissionsAndroid } from 'react-native';
+import { StyleSheet, View, ActivityIndicator, Button, PermissionsAndroid } from 'react-native';
 import { Colors } from '../constants/Colors';
-import { } from 'react-native-maps';
 import RNLocation from 'react-native-location';
+import RcMapView from './RcMapView';
 
 const LocationSelector = () => {
   const [isFetching, setIsFetching] = useState(false);
@@ -37,7 +37,7 @@ const LocationSelector = () => {
     setIsFetching(true);
     const hasPermission = await requestLocationPermission();
     if (!hasPermission) return;
-    RNLocation.configure({ distanceFilter: null });
+    RNLocation.configure({ distanceFilter: 5 });
     const currentLocation = await RNLocation.getLatestLocation({ timeout: 60000 });
     setPickedLocation({
       lat: currentLocation.latitude,
@@ -48,9 +48,8 @@ const LocationSelector = () => {
 
   return (
     <View style={styles.locationSelector}>
-      <View style={styles.mapPreview}>
-        {isFetching ? <ActivityIndicator size='large' color={Colors.primary} /> : <Text>No location chosen yet!</Text>}
-      </View>
+      {isFetching && <ActivityIndicator size='large' color={Colors.primary} />}
+      {pickedLocation !== null && <RcMapView location={pickedLocation} />}
       <Button title='Get Your Location' color={Colors.primary} onPress={handleGetLocation} />
     </View>
   );
@@ -59,15 +58,6 @@ const LocationSelector = () => {
 const styles = StyleSheet.create({
   locationSelector: {
     marginBottom: 15,
-  },
-  mapPreview: {
-    marginBottom: 10,
-    width: '100%',
-    height: 150,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

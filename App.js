@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
-const App = () => {  
+const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
