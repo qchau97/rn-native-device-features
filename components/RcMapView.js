@@ -30,7 +30,6 @@ const RcMapView = ({ location, navigation, style }) => {
       loadingEnabled={true}
       loadingIndicatorColor={Colors.primary}
       region={initialLocation}
-      // onPress={e => console.log(e.nativeEvent.coordinate)}
       onPress={() => { navigation.navigate('Map') }}
     >
       <Marker
