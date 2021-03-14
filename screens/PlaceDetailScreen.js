@@ -7,6 +7,17 @@ import { Colors } from '../constants/Colors';
 const PlaceDetailScreen = ({ navigation, route }) => {
   const placeId = route.params ? route.params.placeId : null;
   const selectedPlace = useSelector(state => state.places.places.find(place => place.id === placeId));
+  const selectedPlaceCoords = {
+    lat: selectedPlace.lat,
+    lng: selectedPlace.lng
+  };
+
+  const handlePress = () => {
+    navigation.navigate('Map', {
+      readonly: true,
+      initialLocation: selectedPlaceCoords,
+    });
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -20,7 +31,8 @@ const PlaceDetailScreen = ({ navigation, route }) => {
         <RcMapView
           navigation={navigation}
           style={styles.map}
-          location={{ lat: selectedPlace.lat, lng: selectedPlace.lng }} />
+          location={selectedPlaceCoords}
+          onPress={handlePress} />
       </View>
     </ScrollView>
   );

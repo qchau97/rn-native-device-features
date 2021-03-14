@@ -1,10 +1,10 @@
 import React from 'react'
-import { Dimensions, StyleSheet, View } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 // import ENV from '../env';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Colors } from '../constants/Colors';
 
-const RcMapView = ({ location, navigation, style }) => {
+const RcMapView = ({ location, onPress, style }) => {
   // const apiKey = ENV.googleApiKey;
   const { width, height } = Dimensions.get('window');
   const ASPECT_RATIO = width / height;
@@ -30,7 +30,7 @@ const RcMapView = ({ location, navigation, style }) => {
       loadingEnabled={true}
       loadingIndicatorColor={Colors.primary}
       region={initialLocation}
-      onPress={() => { navigation.navigate('Map') }}
+      onPress={onPress}
     >
       <Marker
         coordinate={{ latitude: initialLocation.latitude, longitude: initialLocation.longitude }}

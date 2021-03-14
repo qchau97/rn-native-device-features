@@ -1,19 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Dimensions, Platform, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Colors } from '../constants/Colors';
 
 const MapScreen = ({ navigation, route }) => {
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const initialLocation = route.params ? route.params.initialLocation : null;
+  const isReadonly = route.params ? route.params.readonly : null;
+  const [selectedLocation, setSelectedLocation] = useState(initialLocation);
 
-  const initialLocation = {
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+  const { width, height } = Dimensions.get('window');  
+  const ASPECT_RATIO = width / height;
+  const LATITUDE = initialLocation ? initialLocation.lat : 37.78825;
+  const LONGITUDE = initialLocation ? initialLocation.lng : -122.4324;
+  const LATITUDE_DELTA = 0.0922;
+  const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+  const mapRegion = {
+    latitude: LATITUDE,
+    longitude: LONGITUDE,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA,
   };
 
   const handleLocationSelect = (e) => {
+    if (isReadonly) return;
     setSelectedLocation({
       lat: e.nativeEvent.coordinate.latitude,
       lng: e.nativeEvent.coordinate.longitude
@@ -32,6 +42,7 @@ const MapScreen = ({ navigation, route }) => {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
+        !isReadonly &&
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={saveSelectedLocation}>
@@ -44,7 +55,7 @@ const MapScreen = ({ navigation, route }) => {
   return (
     <MapView
       style={styles.map}
-      region={initialLocation}
+      region={mapRegion}
       onPress={handleLocationSelect}
     >
       {selectedLocation && <Marker

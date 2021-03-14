@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ActivityIndicator, Button, PermissionsAndroid, Text } from 'react-native';
+import { StyleSheet, View, Button, PermissionsAndroid } from 'react-native';
 import { Colors } from '../constants/Colors';
 import RNLocation from 'react-native-location';
 import RcMapView from './RcMapView';
@@ -58,6 +58,10 @@ const LocationSelector = ({ navigation, route, onLocationSelected }) => {
     navigation.navigate('Map');
   };
 
+  const handlePress = () => {
+    navigation.navigate('Map');
+  };
+
   useEffect(() => {
     handleGetLocation();
   }, []);
@@ -72,7 +76,7 @@ const LocationSelector = ({ navigation, route, onLocationSelected }) => {
   return (
     <View style={styles.locationSelector}>
       <View style={styles.mapContainer}>
-        {currentLocation !== null && <RcMapView navigation={navigation} location={currentLocation} />}
+        {currentLocation !== null && <RcMapView navigation={navigation} location={currentLocation} onPress={handlePress} />}
       </View>
       <View style={styles.buttonContainer}>
         <View style={styles.button}>
