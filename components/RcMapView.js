@@ -25,7 +25,7 @@ const RcMapView = ({ location, navigation, style }) => {
 
   return (
     <MapView
-      style={styles.mapView}
+      style={{...styles.mapView, ...style}}
       provider={PROVIDER_GOOGLE}
       loadingEnabled={true}
       loadingIndicatorColor={Colors.primary}
