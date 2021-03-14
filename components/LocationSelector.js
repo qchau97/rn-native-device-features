@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, ActivityIndicator, Button, PermissionsAndroid } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, ActivityIndicator, Button, PermissionsAndroid, Text } from 'react-native';
 import { Colors } from '../constants/Colors';
 import RNLocation from 'react-native-location';
 import RcMapView from './RcMapView';
 
-const LocationSelector = () => {
+const LocationSelector = ({ navigation }) => {
   const [isFetching, setIsFetching] = useState(false);
   const [pickedLocation, setPickedLocation] = useState(null);
 
@@ -13,9 +13,9 @@ const LocationSelector = () => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: "Allow FitGoalApp to use your location?",
+          title: "Allow RNNativeFeatures to use your location?",
           message:
-            "FitGoalApp uses this to provide more relevant and personalized experiences.",
+            "RNNativeFeatures uses this to provide more relevant and personalized experiences.",
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',
           buttonPositive: 'Allow'
@@ -46,11 +46,27 @@ const LocationSelector = () => {
     if (currentLocation) setIsFetching(false);
   };
 
+  const handlePickLocation = () => {
+    navigation.navigate('Map');
+  };
+
+  useEffect(() => {
+    handleGetLocation();
+  }, [])
+
   return (
     <View style={styles.locationSelector}>
-      {isFetching && <ActivityIndicator size='large' color={Colors.primary} />}
-      {pickedLocation !== null && <RcMapView location={pickedLocation} />}
-      <Button title='Get Your Location' color={Colors.primary} onPress={handleGetLocation} />
+      <View style={styles.mapContainer}>
+        {pickedLocation !== null && <RcMapView navigation={navigation} location={pickedLocation} />}
+      </View>
+      <View style={styles.buttonContainer}>
+        <View style={styles.button}>
+          <Button title='Get Current Location' color={Colors.primary} onPress={handleGetLocation} />
+        </View>
+        <View style={styles.button}>
+          <Button title='Pick Location On Map' color={Colors.primary} onPress={handlePickLocation} />
+        </View>
+      </View>
     </View>
   );
 };
@@ -58,6 +74,23 @@ const LocationSelector = () => {
 const styles = StyleSheet.create({
   locationSelector: {
     marginBottom: 15,
+  },
+  mapContainer: {
+    marginBottom: 15,
+    width: '100%',
+    height: 150,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  button: {
+    width: '47%',
   },
 });
 

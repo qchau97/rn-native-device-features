@@ -1,4 +1,4 @@
-package com.fitgoalapp;
+package com.rnnativefeatures;
 
 import com.facebook.react.ReactActivity;
 
@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "FitGoalApp";
+    return "RNNativeFeatures";
   }
 
   // @Override

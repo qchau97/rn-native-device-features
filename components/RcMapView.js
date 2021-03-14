@@ -4,7 +4,7 @@ import { Dimensions, StyleSheet, View } from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { Colors } from '../constants/Colors';
 
-const RcMapView = ({ location, children, style }) => {
+const RcMapView = ({ location, navigation, style }) => {
   // const apiKey = ENV.googleApiKey;
   const { width, height } = Dimensions.get('window');
   const ASPECT_RATIO = width / height;
@@ -24,35 +24,28 @@ const RcMapView = ({ location, children, style }) => {
   };
 
   return (
-    <View style={styles.mapContainer}>
-      <MapView
-        style={styles.mapView}
-        provider={PROVIDER_GOOGLE}
-        loadingEnabled={true}
-        loadingIndicatorColor={Colors.primary}
-        region={initialLocation}
-      >
-        <Marker
-          coordinate={{ latitude: initialLocation.latitude, longitude: initialLocation.longitude }}
-          title='Your Current Location'
-        />
-      </MapView>
-    </View>
+    <MapView
+      style={styles.mapView}
+      provider={PROVIDER_GOOGLE}
+      loadingEnabled={true}
+      loadingIndicatorColor={Colors.primary}
+      region={initialLocation}
+      // onPress={e => console.log(e.nativeEvent.coordinate)}
+      onPress={() => { navigation.navigate('Map') }}
+    >
+      <Marker
+        coordinate={{ latitude: initialLocation.latitude, longitude: initialLocation.longitude }}
+        title='Your Current Location'
+      />
+    </MapView>
   )
 }
 
 export default RcMapView;
 
 const styles = StyleSheet.create({
-  mapContainer: {
-    marginBottom: 15,
-    borderColor: '#ccc',
-    borderWidth: 1,
-  },
   mapView: {
     width: '100%',
     height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
