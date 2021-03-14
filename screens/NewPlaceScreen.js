@@ -6,7 +6,7 @@ import LocationSelector from '../components/LocationSelector';
 import { Colors } from '../constants/Colors';
 import { addPlace } from '../store/actions/places';
 
-const NewPlaceScreen = ({ navigation }) => {
+const NewPlaceScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
@@ -38,7 +38,7 @@ const NewPlaceScreen = ({ navigation }) => {
           onChangeText={handleTitleChange}
         />
         <ImageSelector onImageTaken={handleImageTaken} />
-        <LocationSelector navigation={navigation} />
+        <LocationSelector navigation={navigation} route={route} />
         <Button title='Save Place' color={Colors.primary} onPress={handlePlaceSaved} />
       </View>
     </ScrollView>

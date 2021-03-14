@@ -4,9 +4,13 @@ import { Colors } from '../constants/Colors';
 import RNLocation from 'react-native-location';
 import RcMapView from './RcMapView';
 
-const LocationSelector = ({ navigation }) => {
+const LocationSelector = ({ navigation, route }) => {
+  // React Navigation 5 has no getParam() function
+  // Instead, there is another prop beside 'navigation' prop: 'route'
+  // 'params' key holds an object with all params received as key-value pairs
+  const mapPickedLocation = route.params ? route.params.pickedLocation : null;
   const [isFetching, setIsFetching] = useState(false);
-  const [pickedLocation, setPickedLocation] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
 
   const requestLocationPermission = async () => {
     try {
@@ -39,7 +43,7 @@ const LocationSelector = ({ navigation }) => {
     if (!hasPermission) return;
     RNLocation.configure({ distanceFilter: 5 });
     const currentLocation = await RNLocation.getLatestLocation({ timeout: 60000 });
-    setPickedLocation({
+    setCurrentLocation({
       lat: currentLocation.latitude,
       lng: currentLocation.longitude,
     });
@@ -52,12 +56,18 @@ const LocationSelector = ({ navigation }) => {
 
   useEffect(() => {
     handleGetLocation();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (mapPickedLocation) {
+      setCurrentLocation(mapPickedLocation);
+    }
+  }, [mapPickedLocation]);
 
   return (
     <View style={styles.locationSelector}>
       <View style={styles.mapContainer}>
-        {pickedLocation !== null && <RcMapView navigation={navigation} location={pickedLocation} />}
+        {currentLocation !== null && <RcMapView navigation={navigation} location={currentLocation} />}
       </View>
       <View style={styles.buttonContainer}>
         <View style={styles.button}>
