@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import ImageSelector from '../components/ImageSelector';
@@ -10,6 +10,7 @@ const NewPlaceScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
   const handleTitleChange = (newTitle) => {
     setTitle(newTitle);
@@ -17,9 +18,9 @@ const NewPlaceScreen = ({ navigation, route }) => {
 
   const handlePlaceSaved = async () => {
     try {
-      await dispatch(addPlace(title, selectedImage));
+      await dispatch(addPlace(title, selectedImage, selectedLocation));
     } catch (error) {
-      console.log('handlePlaceSaved() error: ',error.message);
+      console.log('handlePlaceSaved() error: ', error.message);
     }
     navigation.goBack();
   };
@@ -27,6 +28,10 @@ const NewPlaceScreen = ({ navigation, route }) => {
   const handleImageTaken = (imagePath) => {
     setSelectedImage(imagePath);
   };
+
+  const handleLocationSelected = useCallback((location) => {
+    setSelectedLocation(location);
+  }, []);
 
   return (
     <ScrollView>
@@ -38,7 +43,7 @@ const NewPlaceScreen = ({ navigation, route }) => {
           onChangeText={handleTitleChange}
         />
         <ImageSelector onImageTaken={handleImageTaken} />
-        <LocationSelector navigation={navigation} route={route} />
+        <LocationSelector navigation={navigation} route={route} onLocationSelected={handleLocationSelected} />
         <Button title='Save Place' color={Colors.primary} onPress={handlePlaceSaved} />
       </View>
     </ScrollView>

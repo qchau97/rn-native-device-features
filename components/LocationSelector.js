@@ -4,7 +4,7 @@ import { Colors } from '../constants/Colors';
 import RNLocation from 'react-native-location';
 import RcMapView from './RcMapView';
 
-const LocationSelector = ({ navigation, route }) => {
+const LocationSelector = ({ navigation, route, onLocationSelected }) => {
   // React Navigation 5 has no getParam() function
   // Instead, there is another prop beside 'navigation' prop: 'route'
   // 'params' key holds an object with all params received as key-value pairs
@@ -47,6 +47,10 @@ const LocationSelector = ({ navigation, route }) => {
       lat: currentLocation.latitude,
       lng: currentLocation.longitude,
     });
+    onLocationSelected({
+      lat: currentLocation.latitude,
+      lng: currentLocation.longitude,
+    });
     if (currentLocation) setIsFetching(false);
   };
 
@@ -61,8 +65,9 @@ const LocationSelector = ({ navigation, route }) => {
   useEffect(() => {
     if (mapPickedLocation) {
       setCurrentLocation(mapPickedLocation);
+      onLocationSelected(mapPickedLocation);
     }
-  }, [mapPickedLocation]);
+  }, [mapPickedLocation, onLocationSelected]);
 
   return (
     <View style={styles.locationSelector}>
